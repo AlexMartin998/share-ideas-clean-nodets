@@ -1,5 +1,7 @@
-import express, { Router } from 'express';
 import compression from 'compression';
+import express, { Router } from 'express';
+
+import { notFoundMiddleware } from './middlewares';
 
 
 
@@ -15,16 +17,14 @@ export class Server {
   public readonly app = express();
   private serverListener?: any;
   private readonly port: number;
-  // private readonly publicPath: string;
   private readonly router: Router;
 
 
   // Avoid hidden dependencies
   constructor(options: Options) {
-    const { port, router, public_path = 'public' } = options;
+    const { port, router } = options;
 
     this.port = port;
-    // this.publicPath = public_path;
     this.router = router;
   }
 
@@ -33,25 +33,15 @@ export class Server {
 
     ///* Middlewares
     this.app.use(express.json());
-    // this.app.use(express.urlencoded({ extended: true }));
     this.app.use(compression());
-
-
-    ///* Serve Static Content
-    // this.app.use(express.static(this.publicPath));
 
 
     ///* Routes
     this.app.use(this.router);
 
 
-    ///* SPA
-    /* this.app.get('*', (_req, res) => {
-      // absolute path:
-      const indexPath = path.join( __dirname + `../../../${ this.publicPath }/index.html` );
-
-      res.sendFile(indexPath);
-    }); */
+    ///* final middlewares
+    this.app.use(notFoundMiddleware);
 
 
     ///* Express Server
