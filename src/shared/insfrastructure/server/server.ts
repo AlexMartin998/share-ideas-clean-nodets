@@ -26,32 +26,39 @@ export class Server {
 
     this.port = port;
     this.router = router;
+
+    this.configureMiddlewares();
+    this.configureRouter();
+    this.configureFinalMiddlewares();
   }
 
 
   async start() {
-
-    ///* Middlewares
-    this.app.use(express.json());
-    this.app.use(compression());
-
-
-    ///* Routes
-    this.app.use(this.router);
-
-
-    ///* final middlewares
-    this.app.use(notFoundMiddleware);
-
-
     ///* Express Server
     this.serverListener = this.app.listen(this.port, () => {
-      console.log(`Server is running on port ${this.port}`);
+      console.log(`Server is running at http://localhost:${this.port}`);
     });
   }
 
-  public close() {
+  close() {
     this.serverListener?.close();
+  }
+
+
+  ///* Router
+  private configureRouter() {
+    this.app.use(this.router);
+  }
+
+
+  ///* Middlewares
+  private configureMiddlewares() {
+    this.app.use(express.json());
+    this.app.use(compression());
+  }
+
+  private configureFinalMiddlewares() {
+    this.app.use(notFoundMiddleware);
   }
 
 }

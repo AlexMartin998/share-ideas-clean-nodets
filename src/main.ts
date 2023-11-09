@@ -1,6 +1,6 @@
-import { envs } from './infrastructure/config';
-import { AppRouter } from './presentation/router';
-import { Server } from './presentation/server';
+import { envs } from '@/shared/insfrastructure/config';
+import { AppRouter } from '@/shared/insfrastructure/server/router';
+import { Server } from '@/shared/insfrastructure/server/server';
 
 
 (async () => {
@@ -13,7 +13,6 @@ function main() {
   // Avoid hidden dependencies
   const server = new Server({
     port: envs.PORT,
-    // public_path: envs.PUBLIC_PATH,
     router: AppRouter.routes,
   });
 
