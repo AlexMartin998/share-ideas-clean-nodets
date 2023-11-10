@@ -1,7 +1,7 @@
 import { User } from '../models/user';
 
 
-export interface UserDatasource {
+export interface UserRepository {
 
   findAll(): Promise<User[]>;
 
@@ -11,7 +11,7 @@ export interface UserDatasource {
 
   create(user: User): Promise<User>;
 
-  update(user: User): Promise<User>;
+  update(id:number, user: User): Promise<User>;
 
   // TODO: change to UUID to allow changes to NoSQL DB
   delete(id: number): Promise<boolean>;
