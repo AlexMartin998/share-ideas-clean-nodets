@@ -43,7 +43,7 @@ export class PostgresUserDatasource implements UserDatasource {
       },
     });
 
-    return UserMapper.entityToDomain(newUser);
+    return UserMapper.entityToDomainModel(newUser);
   }
 
   update(id: number, user: User): Promise<User> {
