@@ -18,7 +18,9 @@ export class User {
     readonly email: string,
     readonly password: string,
     readonly role: Role
-  ) {}
+  ) {
+    User.validate({ id, username, email, password, role });
+  }
 
 
   static create({ id, username, email, password, role }: UserProps) {

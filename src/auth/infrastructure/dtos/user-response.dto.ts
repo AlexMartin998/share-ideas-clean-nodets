@@ -1,20 +1,18 @@
-import { Role } from '@/auth/domain/models';
+import { User } from '@/auth/domain/models';
 
 
 export class UserResponseDto {
 
   private constructor(
-    public id: string,
-    public username: string,
-    public email: string,
-    public role: Role
+    public user: User,
+    public token: String
   ) {}
 
 
   static create(object: { [key: string]: any }): UserResponseDto {
-    const { id, username, email, role } = object;
+    const { user, token } = object;
 
-    return new UserResponseDto(id, username, email, role);
+    return new UserResponseDto(user, token);
   }
 
 }
