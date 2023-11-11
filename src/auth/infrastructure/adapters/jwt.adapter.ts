@@ -1,13 +1,14 @@
 import jwt from 'jsonwebtoken';
 
+import { JwtConstants } from '@/auth/domain/constants';
+import { HandleAuthToken } from '@/auth/domain/use-cases';
 import { Nullable } from '@/shared/domain';
 import { envs } from '@/shared/insfrastructure/config';
-import { JwtConstants } from '../shared/constants';
 
 
-export abstract class JwtAdapter {
+export class JwtAdapter implements HandleAuthToken {
 
-  static async generateToken(
+  async generateToken(
     payload: any,
     duration: string = JwtConstants.duration
   ): Promise<Nullable<string>> {
@@ -26,8 +27,7 @@ export abstract class JwtAdapter {
     });
   }
 
-
-  static validateToken<T>(token: string): Promise<Nullable<T>> {
+  validateToken<T>(token: string): Promise<Nullable<T>> {
     return new Promise(resolve => {
       jwt.verify(token, envs.JWT_SECRET, (err, decoded) => {
         if (err) return resolve(null);
