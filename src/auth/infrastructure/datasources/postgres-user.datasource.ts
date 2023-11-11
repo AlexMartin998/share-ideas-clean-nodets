@@ -3,21 +3,31 @@ import { User } from '@/auth/domain/models';
 import { prisma } from '@/shared/insfrastructure/persistence/postgres';
 import { UserMapper } from '../mappers';
 
-
 export class PostgresUserDatasource implements UserDatasource {
-
   async findAll(): Promise<User[]> {
     const users = await prisma.user.findMany();
 
     return users.map(UserMapper.entityToDomainModel);
   }
 
-  findOne(id: number): Promise<User> {
-    throw new Error('Method not implemented.');
+  async findOne(id: number): Promise<User> {
+    const user = await prisma.user.findFirst({
+      where: { id },
+      include: { role: true },
+    });
+    if (!user) return null as any;
+
+    return UserMapper.entityToDomainModel(user);
   }
 
-  findOneByEmail(email: String): Promise<User> {
-    throw new Error('Method not implemented.');
+  async findOneByEmail(email: string): Promise<User> {
+    const user = await prisma.user.findFirst({
+      where: { email },
+      include: { role: true },
+    });
+    if (!user) return null as any;
+
+    return UserMapper.entityToDomainModel(user);
   }
 
   async create(user: User): Promise<User> {
@@ -43,5 +53,4 @@ export class PostgresUserDatasource implements UserDatasource {
   delete(id: number): Promise<boolean> {
     throw new Error('Method not implemented.');
   }
-
 }
