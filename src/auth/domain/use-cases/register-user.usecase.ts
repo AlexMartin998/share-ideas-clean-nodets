@@ -9,6 +9,6 @@ export interface UserToken {
 
 export interface RegisterUser {
 
-  register(user: User): Promise<UserToken>;
+  run(user: User): Promise<UserToken>;
 
 }
