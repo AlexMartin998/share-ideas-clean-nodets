@@ -11,6 +11,7 @@ export class UserResponseDto {
 
   static create(object: { [key: string]: any }): UserResponseDto {
     const { user, token } = object;
+    delete user.password;
 
     return new UserResponseDto(user, token);
   }

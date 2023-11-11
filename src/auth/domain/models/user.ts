@@ -13,11 +13,11 @@ type UserProps = {
 export class User {
 
   constructor(
-    readonly id: number,
-    readonly username: string,
-    readonly email: string,
-    readonly password: string,
-    readonly role: Role
+    public readonly id: number,
+    public readonly username: string,
+    public readonly email: string,
+    public password: string,
+    public readonly role: Role
   ) {
     User.validate({ id, username, email, password, role });
   }
@@ -50,9 +50,9 @@ export class User {
       throw new InvalidArgumentError('Username has less than 3 characters ');
     if (!emailPattern.test(email))
       throw new InvalidArgumentError('Invalid email');
-    if (password.length < 6)
+    if (!password || password.length < 6)
       throw new InvalidArgumentError('Password has less than 6 characters');
-    if (!role.name) throw new InvalidArgumentError('Role is required');
+    if (!role || !role?.name) throw new InvalidArgumentError('Role is required');
   }
 
 }

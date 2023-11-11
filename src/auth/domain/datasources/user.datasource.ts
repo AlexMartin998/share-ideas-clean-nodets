@@ -7,7 +7,7 @@ export interface UserDatasource {
 
   findOne(id: number): Promise<User>;
 
-  findOneByEmail(email: String): Promise<User>;
+  findOneByEmail(email: string): Promise<User>;
 
   create(user: User): Promise<User>;
 

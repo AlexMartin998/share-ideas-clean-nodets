@@ -15,19 +15,17 @@ export class LoginDto {
     public readonly password: string
   ) {}
 
-  static create(object: { [key: string]: any }): [string?, LoginDto?] {
+  static create(object: { [key: string]: any }): LoginDto {
     const { email, password } = object;
 
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    if (!email) throw new InvalidArgumentError('Missing email');
     if (!emailPattern.test(email))
       throw new InvalidArgumentError('Invalid email');
-    if (!password) throw new InvalidArgumentError('Missing password');
-    if (password.length < 6)
-      throw new InvalidArgumentError('Password too short');
+    if (!password || password.length < 6)
+      throw new InvalidArgumentError('Password has less than 6 characters');
 
-    return [undefined, new LoginDto(email, password)];
+    return new LoginDto(email, password);
   }
 
 }
