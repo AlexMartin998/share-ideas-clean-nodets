@@ -29,6 +29,7 @@ container
   .register({
     userRepository: asClass(UserRepositoryImpl),
     roleRepository: asClass(RoleRepositoryImpl),
+    // ideasRepository: asClass(),
   })
   .register({
     userRegistrator: asClass(UserRegistrator),
