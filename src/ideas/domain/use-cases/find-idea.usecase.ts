@@ -3,6 +3,6 @@ import { Idea } from '../models';
 
 export interface FindIdea {
 
-  run(): Promise<Idea>;
+  run(id: number): Promise<Idea>;
 
 }
