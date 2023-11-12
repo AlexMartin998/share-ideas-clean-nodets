@@ -3,6 +3,6 @@ import { Idea } from '../models';
 
 export interface UpdateIdea {
 
-  run(id: number, idea: Object): Promise<Idea>;
+  run(id: number, ideaLike: Object): Promise<Idea>;
 
 }

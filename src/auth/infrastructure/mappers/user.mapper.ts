@@ -18,13 +18,13 @@ export class UserMapper {
     return new User(id, username, email, password, role);
   }
   
-  public static createUserDtoToDomainModel(object: {
-    [key: string]: any;
-  }): User {
-    const { id, username, email, password, role } = object;
+  // public static createUserDtoToDomainModel(object: {
+  //   [key: string]: any;
+  // }): User {
+  //   const { id, username, email, password, role } = object;
 
-    return new User(id, username, email, password, role);
-  }
+  //   return new User(id, username, email, password, role);
+  // }
 
   public static domainModelToResponseDto(object: {
     [key: string]: any;
