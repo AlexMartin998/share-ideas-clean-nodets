@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 
-import { UserLogin, UserRegistrator } from '@/auth/application/use-cases';
 import { UnauthorizedError } from '@/auth/domain/errors';
-import { LoginDto } from '@/auth/domain/use-cases';
+import { LoginDto, LoginUser, RegisterUser } from '@/auth/domain/use-cases';
 import { DomainError, ResourceNotFoundError } from '@/shared/domain';
 import { UserMapper } from '../mappers';
 
@@ -11,8 +10,8 @@ export class AuthController {
 
   ///* DI
   constructor(
-    private readonly userRegistrator: UserRegistrator,
-    private readonly userLogin: UserLogin
+    private readonly userRegistrator: RegisterUser,
+    private readonly userLogin: LoginUser
   ) {}
 
 
