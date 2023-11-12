@@ -43,7 +43,7 @@ export class UserRegistrator implements RegisterUser {
     params.password = this.passwordHandler.hash(params.password);
 
 
-    ///* create user to egister DomainEvents
+    ///* create user to register DomainEvents
     const user = User.create({ ...params, role });
     const newUser: User = await this.userRepository.create(user);
     // usecase (app) is who actually Publish DomainEvents
