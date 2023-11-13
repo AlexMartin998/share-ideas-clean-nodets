@@ -8,12 +8,15 @@ type RunParams = {
   userId: number;
 };
 
+
 export class IdeaUpdater implements UpdateIdea {
+
   ///* DI
   constructor(
     private readonly ideasRepository: IdeasRepository,
     private readonly ideaFinder: FindIdea
   ) {}
+
 
   async run(
     id: number,
@@ -23,6 +26,7 @@ export class IdeaUpdater implements UpdateIdea {
 
     const idea = new Idea(id, title, description, userId, []);
 
-    throw this.ideasRepository.update(id, idea);
+    return this.ideasRepository.update(id, idea);
   }
+
 }
