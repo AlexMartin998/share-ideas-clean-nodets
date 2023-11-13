@@ -1,6 +1,7 @@
 import { UserDatasource } from "@/auth/domain/datasources";
 import { User } from "@/auth/domain/models";
 import { UserRepository } from "@/auth/domain/repositories";
+import { Nullable } from "@/shared/domain";
 
 
 export class UserRepositoryImpl implements UserRepository {
@@ -13,11 +14,11 @@ export class UserRepositoryImpl implements UserRepository {
     return this.userDatasource.findAll();
   }
 
-  findOne(id: number): Promise<User> {
+  findOne(id: number): Promise<Nullable<User>> {
     return this.userDatasource.findOne(id);
   }
 
-  findOneByEmail(email: string): Promise<User> {
+  findOneByEmail(email: string): Promise<Nullable<User>> {
     return this.userDatasource.findOneByEmail(email);
   }
 

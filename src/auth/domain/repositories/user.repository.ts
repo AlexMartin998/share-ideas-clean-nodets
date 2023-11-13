@@ -1,3 +1,4 @@
+import { Nullable } from '@/shared/domain';
 import { User } from '../models/user';
 
 
@@ -5,9 +6,9 @@ export interface UserRepository {
 
   findAll(): Promise<User[]>;
 
-  findOne(id: number): Promise<User>;
+  findOne(id: number): Promise<Nullable<User>>;
 
-  findOneByEmail(email: String): Promise<User>;
+  findOneByEmail(email: String): Promise<Nullable<User>>;
 
   create(user: User): Promise<User>;
 

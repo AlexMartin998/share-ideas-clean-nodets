@@ -23,7 +23,7 @@ export class UserLogin implements LoginUser {
 
 
   async run(loginDto: LoginDto): Promise<UserToken> {
-    const user: User = await this.userRepository.findOneByEmail(loginDto.email);
+    const user = await this.userRepository.findOneByEmail(loginDto.email);
     const passwordsMatched = this.passwordHandler.compare(
       loginDto.password,
       user?.password ?? ''
