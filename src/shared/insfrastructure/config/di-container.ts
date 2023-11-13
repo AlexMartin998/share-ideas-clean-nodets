@@ -18,6 +18,7 @@ import { AuthController } from '@/auth/infrastructure/rest/controller';
 import { AuthRoutes } from '@/auth/infrastructure/rest/routes';
 import {
   CommentCreator,
+  CommentDeleter,
   CommentFinder,
   CommentUpdater,
   CommentsFinder,
@@ -71,6 +72,7 @@ container
     commentsFinder: asClass(CommentsFinder),
     commentFinder: asClass(CommentFinder),
     commentUpdater: asClass(CommentUpdater),
+    commentDeleter: asClass(CommentDeleter),
   })
   .register({
     // // Controllers

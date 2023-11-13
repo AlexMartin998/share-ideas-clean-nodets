@@ -28,6 +28,13 @@ export class CommentsRoutes {
       this.commentsController.update
     );
 
+    router.delete(
+      '/:id',
+
+      [this.authMiddleware.validateJWT],
+      this.commentsController.delete
+    );
+
     return router;
   }
 }
