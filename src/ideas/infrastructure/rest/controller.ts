@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 
-import { CreateIdea, FindAllIdeas } from '@/ideas/domain/use-cases';
+import { CreateIdea, FindAllIdeas, FindIdea } from '@/ideas/domain/use-cases';
 import { DomainError, ResourceNotFoundError } from '@/shared/domain';
 
 export class IdeasController {
   constructor(
     private readonly ideaCreator: CreateIdea,
-    private readonly ideasFinder: FindAllIdeas
+    private readonly ideasFinder: FindAllIdeas,
+    private readonly ideaFinder: FindIdea
   ) {}
 
   create = async (req: Request, res: Response) => {
@@ -22,6 +23,17 @@ export class IdeasController {
     try {
       const ideas = await this.ideasFinder.run();
       return res.json(ideas);
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  };
+
+  findOne = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const idea = await this.ideaFinder.run(+id);
+      return res.json(idea);
     } catch (error) {
       this.handleError(error, res);
     }

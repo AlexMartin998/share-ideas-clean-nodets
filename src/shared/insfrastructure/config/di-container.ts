@@ -12,7 +12,11 @@ import {
 } from '@/auth/infrastructure/repositories';
 import { AuthController } from '@/auth/infrastructure/rest/controller';
 import { AuthRoutes } from '@/auth/infrastructure/rest/routes';
-import { IdeaCreator, IdeasFinder } from '@/ideas/application/use-cases';
+import {
+  IdeaCreator,
+  IdeaFinder,
+  IdeasFinder,
+} from '@/ideas/application/use-cases';
 import { PostgresIdeasDatasource } from '@/ideas/infrastructure/datasources';
 import { IdeasRepositoryImpl } from '@/ideas/infrastructure/repositories';
 import { IdeasController } from '@/ideas/infrastructure/rest/controller';
@@ -40,8 +44,9 @@ container
     // // UseCases
     userRegistrator: asClass(UserRegistrator),
     userLogin: asClass(UserLogin),
-    ideasFinder: asClass(IdeasFinder),
     ideaCreator: asClass(IdeaCreator),
+    ideasFinder: asClass(IdeasFinder),
+    ideaFinder: asClass(IdeaFinder),
   })
   .register({
     // // Controllers

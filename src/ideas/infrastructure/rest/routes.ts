@@ -15,6 +15,7 @@ export class IdeasRoutes {
       this.ideasController.create
     );
     router.get('/', this.ideasController.findAll);
+    router.get('/:id', this.ideasController.findOne);
 
     return router;
   }
