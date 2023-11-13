@@ -1,7 +1,9 @@
-import { AuthMiddleware } from '@/shared/insfrastructure/middlewares';
 import { Router } from 'express';
-import { IdeasValidatorMiddleware } from '../middlewares';
+
+import { AuthMiddleware } from '@/shared/insfrastructure/middlewares';
+import { IdeasValidatorMiddleware } from './middlewares';
 import { IdeasController } from './controller';
+
 
 export class IdeasRoutes {
   ///* DI
