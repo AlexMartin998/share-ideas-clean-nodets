@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IdeasDatasource } from '@/ideas/domain/datasources';
 import { Idea } from '@/ideas/domain/models';
 import { Nullable } from '@/shared/domain';
