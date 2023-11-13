@@ -23,7 +23,7 @@ export class IdeasController {
     try {
       const idea = await this.ideaCreator.run({
         ...req.body,
-        userId: req.body.user.id, // authMiddleware
+        userId: req.body.authUser.id, // authMiddleware
       });
       res.status(201).json(IdeaMapper.domainModelToResponseDto(idea));
     } catch (error) {
@@ -57,7 +57,7 @@ export class IdeasController {
     try {
       const updatedIdea = await this.ideaUpdater.run(+id, {
         ...req.body,
-        userId: req.body.user.id,
+        userId: req.body.authUser.id,
       });
 
       return res
@@ -71,7 +71,7 @@ export class IdeasController {
   delete = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      await this.ideaDeleter.run(+id, +req.body.user.id);
+      await this.ideaDeleter.run(+id, +req.body.authUser.id);
 
       res.status(204).send();
     } catch (error) {

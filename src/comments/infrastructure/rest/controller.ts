@@ -23,7 +23,7 @@ export class CommentsController {
     try {
       const comment = await this.commentCreator.run({
         ...req.body,
-        userId: req.body.user.id, // authMiddleware
+        userId: req.body.authUser.id, // authMiddleware
       });
 
       res.status(201).json(CommentMapper.domainModelToResponseDto(comment));
@@ -60,7 +60,7 @@ export class CommentsController {
     try {
       const updatedComment = await this.commentUpdater.run(+id, {
         ...req.body,
-        userId: req.body.user.id,
+        userId: req.body.authUser.id,
       });
 
       return res
@@ -74,7 +74,7 @@ export class CommentsController {
   delete = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      await this.commentDeleter.run(+id, +req.body.user.id);
+      await this.commentDeleter.run(+id, +req.body.authUser.id);
 
       res.status(204).send();
     } catch (error) {

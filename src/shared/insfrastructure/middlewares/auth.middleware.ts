@@ -28,7 +28,7 @@ export class AuthMiddleware {
       const user = await this.userFinder.run(+payload.id);
 
       // isActive?
-      req.body.user = user;
+      req.body.authUser = user;
 
       next();
     } catch (error: unknown) {

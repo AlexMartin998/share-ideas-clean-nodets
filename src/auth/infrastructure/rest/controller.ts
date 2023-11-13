@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 
+import { JwtConstants } from '@/auth/application/constants';
 import { UnauthorizedError } from '@/auth/domain/errors';
-import { LoginDto, LoginUser, RegisterUser } from '@/auth/domain/use-cases';
+import { HandleAuthToken, LoginDto, LoginUser, RegisterUser } from '@/auth/domain/use-cases';
 import { DomainError, ResourceNotFoundError } from '@/shared/domain';
 import { UserMapper } from '../mappers';
 
@@ -11,7 +12,8 @@ export class AuthController {
   ///* DI
   constructor(
     private readonly userRegistrator: RegisterUser,
-    private readonly userLogin: LoginUser
+    private readonly userLogin: LoginUser,
+    private readonly authTokenHandler: HandleAuthToken,
   ) {}
 
 
@@ -33,6 +35,27 @@ export class AuthController {
       const userToken = await this.userLogin.run(loginDto);
 
       const userMapped = UserMapper.domainModelToResponseDto(userToken);
+      return res.status(201).json(userMapped);
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  };
+
+  renewJwt = async (req: Request, res: Response) => {
+    try {
+      const { authUser } = req.body;
+      if (!authUser) throw new UnauthorizedError('Invalid token');
+
+      const token = await this.authTokenHandler.generateToken(
+        { id: authUser.id },
+        JwtConstants.duration
+      );
+      if (!token) throw new Error('Something went wrong while creating JWT');
+
+      const userMapped = UserMapper.domainModelToResponseDto({
+        user: authUser,
+        token,
+      });
       return res.status(201).json(userMapped);
     } catch (error) {
       this.handleError(error, res);
