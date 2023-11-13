@@ -1,6 +1,7 @@
 import { Comment } from '@/comments/domain/models';
 import { CommentsRepository } from '@/comments/domain/repositories';
 import { FindComment, UpdateComment } from '@/comments/domain/use-cases';
+import { FindIdea } from '@/ideas/domain/use-cases';
 import { ResourceNotFoundError } from '@/shared/domain';
 
 
@@ -16,11 +17,15 @@ export class CommentUpdater implements UpdateComment {
   ///* DI
   constructor(
     private readonly commentsRepository: CommentsRepository,
-    private readonly commentFinder: FindComment
+    private readonly commentFinder: FindComment,
+    private readonly ideaFinder: FindIdea,
+
   ) {}
 
 
   async run(id: number, { text, userId, ideaId }: RunParams): Promise<Comment> {
+    await this.ideaFinder.run(ideaId);
+
     const comment = await this.commentFinder.run(id);
     if (comment.userId !== userId)
       throw new ResourceNotFoundError(`Idea not found with ID: ${id}`);

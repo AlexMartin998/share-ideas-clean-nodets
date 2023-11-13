@@ -7,12 +7,14 @@ import {
 } from '@/comments/domain/use-cases';
 import { DomainError, ResourceNotFoundError } from '@/shared/domain';
 import { CommentMapper } from '../mappers';
+import { UpdateIdea } from '@/ideas/domain/use-cases';
 
 export class CommentsController {
   constructor(
     private readonly commentCreator: CreateComment,
     private readonly commentsFinder: FindComments,
-    private readonly commentFinder: FindComment
+    private readonly commentFinder: FindComment,
+    private readonly commentUpdater: UpdateIdea,
   ) {}
 
   create = async (req: Request, res: Response) => {
@@ -41,8 +43,25 @@ export class CommentsController {
     const { id } = req.params;
 
     try {
-      const idea = await this.commentFinder.run(+id);
-      return res.status(200).json(CommentMapper.domainModelToResponseDto(idea));
+      const comment = await this.commentFinder.run(+id);
+      return res.status(200).json(CommentMapper.domainModelToResponseDto(comment));
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  };
+
+  update = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const updatedComment = await this.commentUpdater.run(+id, {
+        ...req.body,
+        userId: req.body.user.id,
+      });
+
+      return res
+        .status(200)
+        .json(CommentMapper.domainModelToResponseDto(updatedComment));
     } catch (error) {
       this.handleError(error, res);
     }
