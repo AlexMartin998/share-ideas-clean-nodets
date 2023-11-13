@@ -14,6 +14,8 @@ export class CommentsRoutes {
     const router = Router();
 
     router.get('/', this.commentsController.findAll);
+    router.get('/:id', this.commentsController.findOne);
+
 
     router.post(
       '/',
