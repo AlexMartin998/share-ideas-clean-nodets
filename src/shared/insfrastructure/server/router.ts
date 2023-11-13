@@ -18,6 +18,7 @@ export class AppRouter {
 
     router.use('/api/auth', this.authRoutes.routes);
     router.use('/api/ideas', this.ideasRoutes.routes);
+    // router.use('/api/comments', this.commentsRoutes.routes);
 
     return router;
   }
