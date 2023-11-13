@@ -18,7 +18,7 @@ export class JwtAdapter implements HandleAuthToken {
         envs.JWT_SECRET,
         { expiresIn: duration },
         (err, token) => {
-          // null to avoid using try/catch
+          // resulve null to avoid using try/catch
           if (err || !token) return resolve(null);
 
           resolve(token);
