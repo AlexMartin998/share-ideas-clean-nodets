@@ -1,4 +1,4 @@
-import { Idea } from "../models";
+import { Idea } from '../models';
 
 
 export interface FindAllIdeas {
