@@ -1,13 +1,18 @@
 import { Request, Response } from 'express';
 
-import { CreateComment, FindComments } from '@/comments/domain/use-cases';
+import {
+  CreateComment,
+  FindComment,
+  FindComments,
+} from '@/comments/domain/use-cases';
 import { DomainError, ResourceNotFoundError } from '@/shared/domain';
 import { CommentMapper } from '../mappers';
 
 export class CommentsController {
   constructor(
     private readonly commentCreator: CreateComment,
-    private readonly commentsFinder: FindComments
+    private readonly commentsFinder: FindComments,
+    private readonly commentFinder: FindComment
   ) {}
 
   create = async (req: Request, res: Response) => {
@@ -27,6 +32,17 @@ export class CommentsController {
     try {
       const comments = await this.commentsFinder.run();
       return res.json(comments.map(CommentMapper.domainModelToResponseDto));
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  };
+
+  findOne = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const idea = await this.commentFinder.run(+id);
+      return res.status(200).json(CommentMapper.domainModelToResponseDto(idea));
     } catch (error) {
       this.handleError(error, res);
     }
