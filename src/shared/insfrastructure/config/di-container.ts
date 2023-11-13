@@ -20,6 +20,7 @@ import {
   IdeaCreator,
   IdeaDeleter,
   IdeaFinder,
+  IdeaUpdater,
   IdeasFinder,
 } from '@/ideas/application/use-cases';
 import { PostgresIdeasDatasource } from '@/ideas/infrastructure/datasources';
@@ -55,6 +56,7 @@ container
     ideasFinder: asClass(IdeasFinder),
     ideaFinder: asClass(IdeaFinder),
     ideaDeleter: asClass(IdeaDeleter),
+    ideaUpdater: asClass(IdeaUpdater),
   })
   .register({
     // // Controllers

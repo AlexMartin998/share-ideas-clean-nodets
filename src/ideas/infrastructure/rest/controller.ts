@@ -5,15 +5,18 @@ import {
   DeleteIdea,
   FindAllIdeas,
   FindIdea,
+  UpdateIdea,
 } from '@/ideas/domain/use-cases';
 import { DomainError, ResourceNotFoundError } from '@/shared/domain';
+import { IdeaMapper } from '../mappers';
 
 export class IdeasController {
   constructor(
     private readonly ideaCreator: CreateIdea,
     private readonly ideasFinder: FindAllIdeas,
     private readonly ideaFinder: FindIdea,
-    private readonly ideaDeleter: DeleteIdea
+    private readonly ideaDeleter: DeleteIdea,
+    private readonly ideaUpdater: UpdateIdea
   ) {}
 
   create = async (req: Request, res: Response) => {
@@ -22,7 +25,7 @@ export class IdeasController {
         ...req.body,
         userId: req.body.user.id, // authMiddleware
       });
-      res.status(201).json(idea);
+      res.status(201).json(IdeaMapper.domainModelToResponseDto(idea));
     } catch (error) {
       this.handleError(error, res);
     }
@@ -31,7 +34,7 @@ export class IdeasController {
   findAll = async (req: Request, res: Response) => {
     try {
       const ideas = await this.ideasFinder.run();
-      return res.json(ideas);
+      return res.json(ideas.map(IdeaMapper.domainModelToResponseDto));
     } catch (error) {
       this.handleError(error, res);
     }
@@ -42,7 +45,24 @@ export class IdeasController {
 
     try {
       const idea = await this.ideaFinder.run(+id);
-      return res.json(idea);
+      return res.status(200).json(IdeaMapper.domainModelToResponseDto(idea));
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  };
+
+  update = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const updatedIdea = await this.ideaUpdater.run(+id, {
+        ...req.body,
+        userId: req.body.user.id,
+      });
+
+      return res
+        .status(200)
+        .json(IdeaMapper.domainModelToResponseDto(updatedIdea));
     } catch (error) {
       this.handleError(error, res);
     }

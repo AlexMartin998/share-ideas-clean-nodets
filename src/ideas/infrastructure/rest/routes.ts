@@ -24,6 +24,11 @@ export class IdeasRoutes {
 
     router.get('/', this.ideasController.findAll);
     router.get('/:id', this.ideasController.findOne);
+    router.patch(
+      '/:id',
+      [this.authMiddleware.validateJWT],
+      this.ideasController.update
+    );
     router.delete('/:id', this.ideasController.delete);
 
     return router;
