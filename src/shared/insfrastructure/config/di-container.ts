@@ -19,6 +19,7 @@ import { AuthRoutes } from '@/auth/infrastructure/rest/routes';
 import {
   CommentCreator,
   CommentFinder,
+  CommentUpdater,
   CommentsFinder,
 } from '@/comments/application/use-cases';
 import { PostgresCommentsRepository } from '@/comments/infrastructure/repositories';
@@ -69,6 +70,7 @@ container
     commentCreator: asClass(CommentCreator),
     commentsFinder: asClass(CommentsFinder),
     commentFinder: asClass(CommentFinder),
+    commentUpdater: asClass(CommentUpdater),
   })
   .register({
     // // Controllers

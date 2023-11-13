@@ -16,11 +16,16 @@ export class CommentsRoutes {
     router.get('/', this.commentsController.findAll);
     router.get('/:id', this.commentsController.findOne);
 
-
     router.post(
       '/',
       [this.authMiddleware.validateJWT],
       this.commentsController.create
+    );
+
+    router.patch(
+      '/:id',
+      [this.authMiddleware.validateJWT],
+      this.commentsController.update
     );
 
     return router;
