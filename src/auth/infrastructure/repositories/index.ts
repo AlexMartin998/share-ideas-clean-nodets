@@ -1,2 +1,2 @@
-export * from './role.repository.impl';
-export * from './user.repository.impl';
+export * from './postgres-role.repository';
+export * from './postgres-user.repository';

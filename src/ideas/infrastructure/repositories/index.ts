@@ -1,1 +1,1 @@
-export * from './ideas.repository.impl';
+export * from './postgres-ideas.repository';
