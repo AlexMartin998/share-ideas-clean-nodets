@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 
 import { FindUser, HandleAuthToken } from '@/auth/domain/use-cases';
+import { ResourceNotFoundError } from '@/shared/domain';
 
 
 export class AuthMiddleware {
@@ -25,13 +26,15 @@ export class AuthMiddleware {
       if (!payload) return res.status(401).json({ errors: ['Invalid token'] });
 
       const user = await this.userFinder.run(+payload.id);
-      if (!user) return res.status(401).json({ errors: ['Invalid token'] });
 
       // isActive?
       req.body.user = user;
 
       next();
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof ResourceNotFoundError) {
+        return res.status(401).json({ errors: ['Invalid token'] });
+      }
       console.log(error);
       res.status(500).json({ error: 'Internal server error' });
     }
