@@ -12,7 +12,11 @@ import {
 } from '@/auth/infrastructure/repositories';
 import { AuthController } from '@/auth/infrastructure/rest/controller';
 import { AuthRoutes } from '@/auth/infrastructure/rest/routes';
-import { IdeaFinder } from '@/ideas/application/use-cases/idea-finder.usecase';
+import { IdeaCreator, IdeasFinder } from '@/ideas/application/use-cases';
+import { PostgresIdeasDatasource } from '@/ideas/infrastructure/datasources';
+import { IdeasRepositoryImpl } from '@/ideas/infrastructure/repositories';
+import { IdeasController } from '@/ideas/infrastructure/rest/controller';
+import { IdeasRoutes } from '@/ideas/infrastructure/rest/routes';
 import { AppRouter } from '../server/router';
 
 const container = createContainer({
@@ -24,26 +28,30 @@ container
     // // Datasources
     userDatasource: asClass(PostgresUserDatasource),
     roleDatasource: asClass(PostgresRoleDatasource),
+    ideasDatasource: asClass(PostgresIdeasDatasource),
   })
   .register({
     // // Repositories
     userRepository: asClass(UserRepositoryImpl),
     roleRepository: asClass(RoleRepositoryImpl),
-    // ideasRepository: asClass(),
+    ideasRepository: asClass(IdeasRepositoryImpl),
   })
   .register({
     // // UseCases
     userRegistrator: asClass(UserRegistrator),
     userLogin: asClass(UserLogin),
-    ideaFinder: asClass(IdeaFinder),
+    ideasFinder: asClass(IdeasFinder),
+    ideaCreator: asClass(IdeaCreator),
   })
   .register({
     // // Controllers
     authController: asClass(AuthController),
+    ideasController: asClass(IdeasController),
   })
   .register({
     // // Routes
     authRoutes: asClass(AuthRoutes),
+    ideasRoutes: asClass(IdeasRoutes),
     AppRouter: asClass(AppRouter),
   })
   .register({
