@@ -13,7 +13,7 @@ export class IdeaFinder implements FindIdea {
   async run(id: number): Promise<Idea> {
     const idea = await this.ideasRepository.findOne(id);
     if (!idea)
-      throw new ResourceNotFoundError(`Idea does not found with ID : ${id}`);
+      throw new ResourceNotFoundError(`Idea not found with ID: : ${id}`);
 
     return idea;
   }

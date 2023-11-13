@@ -13,6 +13,9 @@ export class IdeasRoutes {
   get routes(): Router {
     const router = Router();
 
+    router.get('/', this.ideasController.findAll);
+    router.get('/:id', this.ideasController.findOne);
+
     router.post(
       '/',
       [
@@ -22,14 +25,18 @@ export class IdeasRoutes {
       this.ideasController.create
     );
 
-    router.get('/', this.ideasController.findAll);
-    router.get('/:id', this.ideasController.findOne);
     router.patch(
       '/:id',
       [this.authMiddleware.validateJWT],
       this.ideasController.update
     );
-    router.delete('/:id', this.ideasController.delete);
+
+    router.delete(
+      '/:id',
+
+      [this.authMiddleware.validateJWT],
+      this.ideasController.delete
+    );
 
     return router;
   }

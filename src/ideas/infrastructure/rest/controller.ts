@@ -71,7 +71,7 @@ export class IdeasController {
   delete = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      await this.ideaDeleter.run(+id);
+      await this.ideaDeleter.run(+id, +req.body.user.id);
 
       res.status(204).send();
     } catch (error) {

@@ -1,5 +1,5 @@
 export interface DeleteIdea {
 
-  run(id: number): Promise<boolean>;
+  run(id: number, userId: number): Promise<boolean>;
 
 }

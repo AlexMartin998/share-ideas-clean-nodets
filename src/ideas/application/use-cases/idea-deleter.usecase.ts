@@ -1,5 +1,6 @@
 import { IdeasRepository } from '@/ideas/domain/repositories';
 import { DeleteIdea, FindIdea } from '@/ideas/domain/use-cases';
+import { ResourceNotFoundError } from '@/shared/domain';
 
 
 export class IdeaDeleter implements DeleteIdea {
@@ -11,8 +12,9 @@ export class IdeaDeleter implements DeleteIdea {
   ) {}
 
 
-  async run(id: number): Promise<boolean> {
-    await this.ideaFinder.run(id);
+  async run(id: number, userId: number): Promise<boolean> {
+    const idea = await this.ideaFinder.run(id);
+    if (idea.userId !== userId) throw new ResourceNotFoundError(`Idea not found with ID: ${id}`)
 
     return this.ideasRepository.delete(id);
   }
