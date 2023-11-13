@@ -14,7 +14,7 @@ export class IdeaDeleter implements DeleteIdea {
 
   async run(id: number, userId: number): Promise<boolean> {
     const idea = await this.ideaFinder.run(id);
-    if (idea.userId !== userId) throw new ResourceNotFoundError(`Idea not found with ID: ${id}`)
+    if (idea.userId !== userId) throw new ResourceNotFoundError(`Idea not found with ID: ${id}`);
 
     return this.ideasRepository.delete(id);
   }

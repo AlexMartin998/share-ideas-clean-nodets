@@ -8,9 +8,9 @@ export interface CommentsRepository {
 
   findOne(id: number): Promise<Nullable<Comment>>;
 
-  create(idea: Comment): Promise<Comment>;
+  create(comment: Comment): Promise<Comment>;
 
-  update(id: number, idea: Comment): Promise<Comment>;
+  update(id: number, comment: Comment): Promise<Comment>;
 
   delete(id: number): Promise<boolean>;
 
