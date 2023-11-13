@@ -2,12 +2,13 @@ import { Request, Response } from 'express';
 
 import {
   CreateComment,
+  DeleteComment,
   FindComment,
   FindComments,
 } from '@/comments/domain/use-cases';
+import { UpdateIdea } from '@/ideas/domain/use-cases';
 import { DomainError, ResourceNotFoundError } from '@/shared/domain';
 import { CommentMapper } from '../mappers';
-import { UpdateIdea } from '@/ideas/domain/use-cases';
 
 export class CommentsController {
   constructor(
@@ -15,6 +16,7 @@ export class CommentsController {
     private readonly commentsFinder: FindComments,
     private readonly commentFinder: FindComment,
     private readonly commentUpdater: UpdateIdea,
+    private readonly commentDeleter: DeleteComment
   ) {}
 
   create = async (req: Request, res: Response) => {
@@ -44,7 +46,9 @@ export class CommentsController {
 
     try {
       const comment = await this.commentFinder.run(+id);
-      return res.status(200).json(CommentMapper.domainModelToResponseDto(comment));
+      return res
+        .status(200)
+        .json(CommentMapper.domainModelToResponseDto(comment));
     } catch (error) {
       this.handleError(error, res);
     }
@@ -62,6 +66,17 @@ export class CommentsController {
       return res
         .status(200)
         .json(CommentMapper.domainModelToResponseDto(updatedComment));
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  };
+
+  delete = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      await this.commentDeleter.run(+id, +req.body.user.id);
+
+      res.status(204).send();
     } catch (error) {
       this.handleError(error, res);
     }
