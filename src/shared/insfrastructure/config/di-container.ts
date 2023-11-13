@@ -17,6 +17,13 @@ import {
 import { AuthController } from '@/auth/infrastructure/rest/controller';
 import { AuthRoutes } from '@/auth/infrastructure/rest/routes';
 import {
+  CommentCreator,
+  CommentsFinder,
+} from '@/comments/application/use-cases';
+import { PostgresCommentsRepository } from '@/comments/infrastructure/repositories';
+import { CommentsController } from '@/comments/infrastructure/rest/controller';
+import { CommentsRoutes } from '@/comments/infrastructure/rest/routes';
+import {
   IdeaCreator,
   IdeaDeleter,
   IdeaFinder,
@@ -46,6 +53,7 @@ container
     userRepository: asClass(UserRepositoryImpl),
     roleRepository: asClass(RoleRepositoryImpl),
     ideasRepository: asClass(IdeasRepositoryImpl),
+    commentsRepository: asClass(PostgresCommentsRepository),
   })
   .register({
     // // UseCases
@@ -57,16 +65,20 @@ container
     ideaFinder: asClass(IdeaFinder),
     ideaDeleter: asClass(IdeaDeleter),
     ideaUpdater: asClass(IdeaUpdater),
+    commentCreator: asClass(CommentCreator),
+    commentsFinder: asClass(CommentsFinder),
   })
   .register({
     // // Controllers
     authController: asClass(AuthController),
     ideasController: asClass(IdeasController),
+    commentsController: asClass(CommentsController),
   })
   .register({
     // // Routes
     authRoutes: asClass(AuthRoutes),
     ideasRoutes: asClass(IdeasRoutes),
+    commentsRoutes: asClass(CommentsRoutes),
     AppRouter: asClass(AppRouter),
   })
   .register({

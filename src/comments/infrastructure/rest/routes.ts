@@ -13,6 +13,8 @@ export class CommentsRoutes {
   get routes(): Router {
     const router = Router();
 
+    router.get('/', this.commentsController.findAll);
+
     router.post(
       '/',
       [this.authMiddleware.validateJWT],
