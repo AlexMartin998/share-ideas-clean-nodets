@@ -1,5 +1,5 @@
 export enum JwtConstants {
 
-  duration = '2h',
+  duration = '24h',
 
 }

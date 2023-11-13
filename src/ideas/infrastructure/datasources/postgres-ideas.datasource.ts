@@ -37,8 +37,15 @@ export class PostgresIdeasDatasource implements IdeasDatasource {
     return IdeaMapper.entityToDomainModel(newIdea);
   }
 
-  update(id: number, idea: Idea): Promise<Idea> {
-    throw new Error('Method not implemented.');
+  async update(id: number, idea: Idea): Promise<Idea> {
+    const { comments, ...rest } = idea;
+
+    const updatedIdea = await prisma.idea.update({
+      where: { id },
+      data: rest,
+    });
+
+    return IdeaMapper.entityToDomainModel(updatedIdea);
   }
 
   async delete(id: number): Promise<boolean> {
