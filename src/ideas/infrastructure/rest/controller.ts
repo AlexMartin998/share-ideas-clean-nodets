@@ -1,13 +1,19 @@
 import { Request, Response } from 'express';
 
-import { CreateIdea, FindAllIdeas, FindIdea } from '@/ideas/domain/use-cases';
+import {
+  CreateIdea,
+  DeleteIdea,
+  FindAllIdeas,
+  FindIdea,
+} from '@/ideas/domain/use-cases';
 import { DomainError, ResourceNotFoundError } from '@/shared/domain';
 
 export class IdeasController {
   constructor(
     private readonly ideaCreator: CreateIdea,
     private readonly ideasFinder: FindAllIdeas,
-    private readonly ideaFinder: FindIdea
+    private readonly ideaFinder: FindIdea,
+    private readonly ideaDeleter: DeleteIdea
   ) {}
 
   create = async (req: Request, res: Response) => {
@@ -37,6 +43,17 @@ export class IdeasController {
     try {
       const idea = await this.ideaFinder.run(+id);
       return res.json(idea);
+    } catch (error) {
+      this.handleError(error, res);
+    }
+  };
+
+  delete = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      await this.ideaDeleter.run(+id);
+
+      res.status(204).send();
     } catch (error) {
       this.handleError(error, res);
     }

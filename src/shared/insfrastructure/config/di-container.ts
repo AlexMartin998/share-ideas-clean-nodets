@@ -18,6 +18,7 @@ import { AuthController } from '@/auth/infrastructure/rest/controller';
 import { AuthRoutes } from '@/auth/infrastructure/rest/routes';
 import {
   IdeaCreator,
+  IdeaDeleter,
   IdeaFinder,
   IdeasFinder,
 } from '@/ideas/application/use-cases';
@@ -53,6 +54,7 @@ container
     ideaCreator: asClass(IdeaCreator),
     ideasFinder: asClass(IdeasFinder),
     ideaFinder: asClass(IdeaFinder),
+    ideaDeleter: asClass(IdeaDeleter),
   })
   .register({
     // // Controllers

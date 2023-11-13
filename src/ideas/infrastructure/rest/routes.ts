@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { IdeasController } from './controller';
-import { IdeasValidatorMiddleware } from '../middlewares';
 import { AuthMiddleware } from '@/shared/insfrastructure/middlewares';
+import { Router } from 'express';
+import { IdeasValidatorMiddleware } from '../middlewares';
+import { IdeasController } from './controller';
 
 export class IdeasRoutes {
   ///* DI
@@ -24,6 +24,7 @@ export class IdeasRoutes {
 
     router.get('/', this.ideasController.findAll);
     router.get('/:id', this.ideasController.findOne);
+    router.delete('/:id', this.ideasController.delete);
 
     return router;
   }
