@@ -24,7 +24,7 @@ export class IdeaUpdater implements UpdateIdea {
     { title, description, userId }: RunParams
   ): Promise<Idea> {
     const idea = await this.ideaFinder.run(id);
-    if (idea.userId !== userId) throw new ResourceNotFoundError(`Idea not found with ID: ${id}`)
+    if (idea.userId !== userId) throw new ResourceNotFoundError(`Idea not found with ID: ${id}`);
 
     const newIdea = new Idea(id, title, description, userId, []);
 
