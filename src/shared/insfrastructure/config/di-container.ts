@@ -1,6 +1,10 @@
 import { InjectionMode, asClass, createContainer } from 'awilix';
 
-import { UserLogin, UserRegistrator } from '@/auth/application/use-cases';
+import {
+  UserFinder,
+  UserLogin,
+  UserRegistrator,
+} from '@/auth/application/use-cases';
 import { BcryptAdapter, JwtAdapter } from '@/auth/infrastructure/adapters';
 import {
   PostgresRoleDatasource,
@@ -21,6 +25,7 @@ import { PostgresIdeasDatasource } from '@/ideas/infrastructure/datasources';
 import { IdeasRepositoryImpl } from '@/ideas/infrastructure/repositories';
 import { IdeasController } from '@/ideas/infrastructure/rest/controller';
 import { IdeasRoutes } from '@/ideas/infrastructure/rest/routes';
+import { AuthMiddleware } from '../middlewares';
 import { AppRouter } from '../server/router';
 
 const container = createContainer({
@@ -44,6 +49,7 @@ container
     // // UseCases
     userRegistrator: asClass(UserRegistrator),
     userLogin: asClass(UserLogin),
+    userFinder: asClass(UserFinder),
     ideaCreator: asClass(IdeaCreator),
     ideasFinder: asClass(IdeasFinder),
     ideaFinder: asClass(IdeaFinder),
@@ -58,6 +64,9 @@ container
     authRoutes: asClass(AuthRoutes),
     ideasRoutes: asClass(IdeasRoutes),
     AppRouter: asClass(AppRouter),
+  })
+  .register({
+    authMiddleware: asClass(AuthMiddleware),
   })
   .register({
     // // UseCases - Adapters

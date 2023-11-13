@@ -12,7 +12,10 @@ export class IdeasController {
 
   create = async (req: Request, res: Response) => {
     try {
-      const idea = await this.ideaCreator.run({ ...req.body, userId: 1 });
+      const idea = await this.ideaCreator.run({
+        ...req.body,
+        userId: req.body.user.id, // authMiddleware
+      });
       res.status(201).json(idea);
     } catch (error) {
       this.handleError(error, res);
