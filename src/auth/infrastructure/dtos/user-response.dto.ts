@@ -5,7 +5,7 @@ export class UserResponseDto {
 
   private constructor(
     public user: User,
-    public token: String
+    public token: string
   ) {}
 
 

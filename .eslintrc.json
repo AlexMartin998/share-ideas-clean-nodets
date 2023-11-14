@@ -10,7 +10,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint" /* , "hexagonal-architecture" */],
   "rules": {
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
@@ -18,4 +18,14 @@
     "semi": ["error", "always"],
     "@typescript-eslint/no-explicit-any": ["off"]
   }
+
+  // // pnpm add -D eslint-plugin-hexagonal-architecture
+  // "overrides": [
+  //   {
+  //     "files": ["./src/**/*.ts"],
+  //     "rules": {
+  //       "hexagonal-architecture/enforce": ["error"]
+  //     }
+  //   }
+  // ]
 }

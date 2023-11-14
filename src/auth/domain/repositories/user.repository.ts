@@ -8,7 +8,7 @@ export interface UserRepository {
 
   findOne(id: number): Promise<Nullable<User>>;
 
-  findOneByEmail(email: String): Promise<Nullable<User>>;
+  findOneByEmail(email: string): Promise<Nullable<User>>;
 
   create(user: User): Promise<User>;
 

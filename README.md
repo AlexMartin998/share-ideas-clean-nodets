@@ -63,6 +63,9 @@ pnpm install
 
 ```bash
 docker compose -f docker-compose.dev.yml up --build
+
+pnpx prisma migrate dev
+pnpx prisma generate
 ```
 
 - Stop and remove containers, networks
